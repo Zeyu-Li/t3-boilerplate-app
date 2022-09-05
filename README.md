@@ -1,161 +1,225 @@
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/95541290/184307358-ebf8be63-e434-49d9-8181-90269ad79599.png" width="130" alt="Logo for T3" />
-</p>
+# Create T3 App
 
-<h1 align="center">
-  create-t3-app
-</h1>
+This is an app bootstrapped according to the [init.tips](https://init.tips) stack, also known as the T3-Stack.
 
-<p align="center">
-  Interactive CLI to quickly set up an opinionated, full-stack, typesafe Next.js project.
-</p>
+## Why are there `.js` files in here?
 
-<p align="center">
-  Get started with the <a rel="noopener noreferrer" target="_blank" href="https://init.tips">T3 Stack</a> by running <code>npx create-t3-app</code>
-</p>
+As per [T3-Axiom #3](https://github.com/t3-oss/create-t3-app/tree/next#3-typesafety-isnt-optional), we take typesafety as a first class citizen. Unfortunately, not all frameworks and plugins support TypeScript which means some of the configuration files have to be `.js` files.
 
-<div align="center">
+We try to emphasize that these files are javascript for a reason, by explicitly declaring its type (`cjs` or `mjs`) depending on what's supported by the library it is used by. Also, all the `js` files in this project are still typechecked using a `@ts-check` comment at the top.
 
-[![PRs-Welcome][contribute-image]][contribute-url] [![Discord](https://img.shields.io/discord/966627436387266600?color=%235865F2&label=Discord&logo=discord&logoColor=%23fff)](https://t3.gg/discord) [![NPM version][npm-image]][npm-url]
-[![Downloads][downloads-image]][npm-url]
+## What's next? How do I make an app with this?
 
-</div>
+We try to keep this project as simple as possible, so you can start with the most basic configuration and then move on to more advanced configuration.
 
-<a href="http://www.youtube.com/watch?v=PbjHxIuHduU" target="_blank">
-  <p align="center">
-    <img src="https://t3.gg/random/T3%20Stack%20V4.png" alt="Video thumbnail of Theo with an indecipherable expression on his face" width="320" />
-  </p>
-</a>
+If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
 
-<a href="http://www.youtube.com/watch?v=PbjHxIuHduU" target="_blank">
-  <p align="center">Watch Theo's overview on Youtube here</p>
-</a>
-
-## Table of contents
-
-- <a href="#about">What is the T3 Stack?</a>
-- <a href="#getting-started">Getting Started</a>
-- <a href="#community">Community</a>
-- <a href="#cli">CLI Docs</a>
-- <a href="#axioms">T3 Axioms</a>
-- <a href="#contributors">Contributors</a>
-
-<h2 id="about">What is the T3 Stack?</h2>
-
-The _"T3 Stack"_ is a web development stack made by [Theo](https://twitter.com/t3dotgg) focused on **simplicity**, **modularity**, and **full-stack typesafety**. It consists of:
-
-- [Next.js](https://nextjs.org)
-- [tRPC](https://trpc.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [TypeScript](https://typescriptlang.org)
+- [Next-Auth.js](https://next-auth.js.org)
 - [Prisma](https://prisma.io)
-- [NextAuth.js](https://next-auth.js.org)
+- [TailwindCSS](https://tailwindcss.com)
+- [tRPC](https://trpc.io) (using @next version? [see v10 docs here](https://alpha.trpc.io))
 
-### What is this? Some kinda template?
+Also checkout these awesome tutorials on `create-t3-app`.
 
-Kind of. We love all of the technologies that `create-t3-app` includes. Check out [init.tips](https://init.tips/others) for even more info on topics such as state management and deployment. But we do not believe these are needed on every project.
+- [Build a Blog With the T3 Stack - tRPC, TypeScript, Next.js, Prisma & Zod](https://www.youtube.com/watch?v=syEWlxVFUrY)
+- [Build a Live Chat Application with the T3 Stack - TypeScript, Tailwind, tRPC](https://www.youtube.com/watch?v=dXRRY37MPuk)
+- [Build a full stack app with create-t3-app](https://www.nexxel.dev/blog/ct3a-guestbook)
+- [A first look at create-t3-app](https://dev.to/ajcwebdev/a-first-look-at-create-t3-app-1i8f)
 
-So we made `create-t3-app` to do one thing: **_Simplify complex boilerplate around the core T3 Stack tech without compromising the pieces modularity_**. This is NOT an all-inclusive template and we expect you to bring your own libraries as well.
+## How do I deploy this?
 
-We are selective about the packages we have included. We don't add libraries that are as simple as `npm install zustand`: **_If you cut an issue asking us to add your preferred libraries, we will make fun of you._**
+### Vercel
 
-<p align="center">
-  <img src="https://media4.giphy.com/media/3orieLHXgpfkKO9Iju/200.gif" alt="Nelson from the Simpsons pointing and saying ha-ha in a mocking tone" />
-</p>
+We recommend deploying to [Vercel](https://vercel.com/?utm_source=t3-oss&utm_campaign=oss). It makes it super easy to deploy NextJs apps.
 
-<h2 id="getting-started">Getting Started</h2>
+- Push your code to a GitHub repository.
+- Go to [Vercel](https://vercel.com/?utm_source=t3-oss&utm_campaign=oss) and sign up with GitHub.
+- Create a Project and import the repository you pushed your code to.
+- Add your environment variables.
+- Click **Deploy**
+- Now whenever you push a change to your repository, Vercel will automatically redeploy your website!
 
-To get started with `create-t3-app`, run any of the following three commands and answer the command prompt questions:
+### Docker
 
-### npm
+You can also dockerize this stack and deploy a container.
 
-```bash
-npx create-t3-app@latest
-```
+Please note that Next.js requires a different process for buildtime (available in the frontend, prefixed by `NEXT_PUBLIC`) and runtime environment, server-side only, variables. In this demo we are using two variables, `NEXT_PUBLIC_FOO` and `BAR`. Pay attention to their positions in the `Dockerfile`, command-line arguments, and `docker-compose.yml`.
 
-### yarn
+1. In your [next.config.mjs](./next.config.mjs), add the `standalone` output-option to your config:
 
-```bash
-yarn create t3-app
-```
+   ```diff
+     export default defineNextConfig({
+       reactStrictMode: true,
+       swcMinify: true,
+   +   output: "standalone",
+     });
+   ```
 
-### pnpm
+2. Remove the `env`-import from [next.config.mjs](./next.config.mjs):
 
-```bash
-pnpm dlx create-t3-app@latest
-```
+   ```diff
+   - import { env } from "./src/env/server.mjs";
+   ```
 
-If you prefer using the [experimental v10 version of tRPC](https://alpha.trpc.io/), use `create-t3-app@next`. Note that the alpha versions of tRPC that it uses may contain API changes. We will try our best to keep on top of these, please file an issue if we have missed something.
+3. Create a `.dockerignore` file with the following contents:
+   <details>
+   <summary>.dockerignore</summary>
 
-An ongoing development branch, `create-t3-app@beta`, can be downloaded for the most recent changes. Expect bugs when using the `beta` branch and please open issues with reproductions when they occur.
+   ```
+   .env
+   Dockerfile
+   .dockerignore
+   node_modules
+   npm-debug.log
+   README.md
+   .next
+   .git
+   ```
 
-<h2 id="community">Community</h2>
+  </details>
 
-For help, discussion about best practices, or any other conversation that would benefit create-t3-app:
+4. Create a `Dockerfile` with the following contents:
+   <details>
+   <summary>Dockerfile</summary>
 
-[Join the T3 Discord Server](https://t3.gg/discord)
+   ```Dockerfile
+   ########################
+   #         DEPS         #
+   ########################
 
-<h2 id="cli">CLI Docs</h2>
+   # Install dependencies only when needed
+   # TODO: re-evaluate if emulation is still necessary on arm64 after moving to node 18
+   FROM --platform=linux/amd64 node:16-alpine AS deps
+   # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+   RUN apk add --no-cache libc6-compat
+   WORKDIR /app
 
-The following CLI options and flags can configure the create command with custom behavior:
+   # Install dependencies based on the preferred package manager
+   COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+   RUN \
+     if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+     elif [ -f package-lock.json ]; then npm ci; \
+     elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i; \
+     else echo "Lockfile not found." && exit 1; \
+     fi
 
-| Option/Flag       | Description                                                             |
-| ----------------- | ----------------------------------------------------------------------- |
-| `[dir]`           | Include a directory argument with a name for the project                |
-| `--noGit`         | Explicitly tell the CLI to not initialize a new git repo in the project |
-| `-y`, `--default` | Bypass the CLI and use all default options to bootstrap a new t3-app    |
-| `--noInstall`     | Generate project without installing dependencies                        |
+   ########################
+   #        BUILDER       #
+   ########################
 
-To use the beta version of `create-t3-app`:
+   # Rebuild the source code only when needed
+   # TODO: re-evaluate if emulation is still necessary on arm64 after moving to node 18
+   FROM --platform=linux/amd64 node:16-alpine AS builder
 
-```bash
-npx create-t3-app@beta
-```
+   ARG NEXT_PUBLIC_FOO
+   ARG BAR
 
-To scaffold the project using tRPC v10 (experimental):
+   WORKDIR /app
+   COPY --from=deps /app/node_modules ./node_modules
+   COPY . .
 
-```bash
-npx create-t3-app@next
-```
+   # Next.js collects completely anonymous telemetry data about general usage.
+   # Learn more here: https://nextjs.org/telemetry
+   # Uncomment the following line in case you want to disable telemetry during the build.
+   # ENV NEXT_TELEMETRY_DISABLED 1
 
-<h2 id="axioms">T3 Axioms</h2>
+   RUN \
+     if [ -f yarn.lock ]; then yarn build; \
+     elif [ -f package-lock.json ]; then npm run build; \
+     elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm run build; \
+     else echo "Lockfile not found." && exit 1; \
+     fi
 
-We'll be frank - this is an _opinionated project_. We share a handful of core beliefs around building and we treat them as the basis for our decisions.
+   ########################
+   #        RUNNER        #
+   ########################
 
-### 1. Solve Problems
+   # Production image, copy all the files and run next
+   # TODO: re-evaluate if emulation is still necessary after moving to node 18
+   FROM --platform=linux/amd64 node:16-alpine AS runner
+   # WORKDIR /usr/app
+   WORKDIR /app
 
-It's easy to fall in the trap of "adding everything" - we explicitly _don't_ want to do that. Everything added to `create-t3-app` should solve a _specific_ problem that exists within the core technologies included. This means we **won't** add things like state libraries (`zustand`, `redux`) but we **will** add things like NextAuth.js and integrate Prisma and tRPC for you.
+   ENV NODE_ENV production
+   # Uncomment the following line in case you want to disable telemetry during runtime.
+   # ENV NEXT_TELEMETRY_DISABLED 1
 
-### 2. Bleed Responsibly
+   RUN addgroup --system --gid 1001 nodejs
+   RUN adduser --system --uid 1001 nextjs
 
-We love our bleeding edge tech. The amount of speed and, honestly, _fun_ that comes out of new shit is really cool. We think it's important to **bleed responsibly**, using riskier tech in the less risky parts. This means we **wouldn't** ⛔️ bet on risky new database tech (SQL is great!). But we **happily** ✅ bet on tRPC since it's just functions that are trivial to move off.
+   COPY --from=builder /app/next.config.mjs ./
+   COPY --from=builder /app/public ./public
+   COPY --from=builder /app/package.json ./package.json
 
-### 3. Typesafety Isn't Optional
+   # Automatically leverage output traces to reduce image size
+   # https://nextjs.org/docs/advanced-features/output-file-tracing
+   COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+   COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-Two of the three T's are typesafe (Typescript, tRPC). We take typesafety seriously in these parts. Any decision that compromises the full-stack, typesafe nature of `create-t3-app` is a decision that should be made in a different project. The stated goal of `create-t3-app` is to provide the quickest way to start a new fullstack, type safe web application.
+   USER nextjs
 
-<h2 id="contributors">Contributors</h2>
+   EXPOSE 3000
 
-We 💖 contributors! Feel free to contribute to this project but **please read the [Contributing Guidelines](CONTRIBUTING.md) before opening an issue or PR** so you understand the branching strategy and local development environment. We also welcome you to join our [Discord](https://discord.gg/tEAQjDseSX) community for either support or contributing guidance.
+   ENV PORT 3000
 
-<a href="https://github.com/t3-oss/create-t3-app/graphs/contributors">
-  <p align="center">
-    <img width="720" src="https://contrib.rocks/image?repo=t3-oss/create-t3-app" alt="A table of avatars from the project's contributors" />
-  </p>
-</a>
+   CMD ["node", "server.js"]
+   ```
 
-<p align="center">
-  Made with <a rel="noopener noreferrer" target="_blank" href="https://contrib.rocks">contrib.rocks</a>
-</p>
+  </details>
 
-<p align="center">
-  <a rel="noopener noreferrer" target="_blank" href="https://vercel.com/?utm_source=t3-oss&utm_campaign=oss">
-    <img height="34px" src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by vercel">
-  </a>
-</p>
+5. To build and run this image locally, run:
 
-[downloads-image]: https://img.shields.io/npm/dm/create-t3-app?color=364fc7&logoColor=364fc7
-[npm-url]: https://www.npmjs.com/package/create-t3-app
-[npm-image]: https://img.shields.io/npm/v/create-t3-app?color=0b7285&logoColor=0b7285
-[contribute-url]: https://github.com/t3-oss/create-t3-app/blob/main/CONTRIBUTING.md
-[contribute-image]: https://img.shields.io/badge/PRs-welcome-blue.svg
+   ```bash
+   docker build -t ct3a -e NEXT_PUBLIC_FOO=foo .
+   docker run -p 3000:3000 -e BAR="bar" ct3a
+   ```
+
+6. You can also use a PaaS such as [Railway's](https://railway.app) automated [Dockerfile deployments](https://docs.railway.app/deploy/dockerfiles) to deploy your app.
+
+### Docker Compose
+
+You can also use docker compose to build the image and run the container.
+
+1. Follow steps 1-4 above
+
+2. Create a `docker-compose.yml` file with the following:
+
+   <details>
+   <summary>docker-compose.yml</summary>
+
+   ```yaml
+   version: "3.9"
+   services:
+     app:
+       platform: "linux/amd64"
+       build:
+         context: .
+         dockerfile: Dockerfile
+         args:
+           NEXT_PUBLIC_FOO: "foo"
+       working_dir: /app
+       ports:
+         - "3000:3000"
+       image: t3-app
+       environment:
+         - BAR=bar
+   ```
+
+   </details>
+
+3. Run this using `docker compose up`.
+
+### Further reading
+
+Here are some useful references you can further look into:
+
+- [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+- [Compose file version 3 reference](https://docs.docker.com/compose/compose-file/compose-file-v3/)
+- [Docker CLI reference](https://docs.docker.com/engine/reference/commandline/docker/)
+- [Docker Compose CLI reference](https://docs.docker.com/compose/reference/)
+
+## Useful resources
+
+Here are some resources that we commonly refer to:
+
+- [Protecting routes with Next-Auth.js](https://next-auth.js.org/configuration/nextjs#unstable_getserversession)
