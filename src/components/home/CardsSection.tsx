@@ -6,7 +6,7 @@ const CardsSection: React.FC = () => {
   return (
     <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
       <h1 className="text-5xl md:text-[5rem] leading-normal font-extrabold text-gray-700">
-        Create <span className="text-purple-300">T3</span> App
+        <span className="text-purple-300">T3</span> Boilerplate App
       </h1>
       <p className="text-2xl text-gray-700">This stack uses:</p>
       <div className="grid gap-3 pt-3 mt-3 text-center md:grid-cols-3 lg:w-2/3">
@@ -24,11 +24,6 @@ const CardsSection: React.FC = () => {
           name="TailwindCSS"
           description="Rapidly build modern websites without ever leaving your HTML"
           documentation="https://tailwindcss.com/"
-        />
-        <TechnologyCard
-          name="tRPC"
-          description="End-to-end typesafe APIs made easy"
-          documentation="https://trpc.io/"
         />
         <TechnologyCard
           name="Next-Auth"
