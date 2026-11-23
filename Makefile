@@ -2,7 +2,7 @@ run:
 	yarn dev
 
 migrate:
-	npx prisma db push
+	yarn prisma db push
 
 primsa:
-	npx prisma studio
+	yarn prisma studio
