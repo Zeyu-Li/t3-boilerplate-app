@@ -5,10 +5,10 @@ Created using `npx create-t3-app@latest`
 ## Next Steps
 
 - change constants in `src\components\constants\constants.tsx` for front end defaults
-- change .env.local to your personal settings
+- copy `.env.example` to `.env` and fill in your personal settings (`.env` is gitignored, so your secrets stay out of git). Production needs a `NEXTAUTH_SECRET` (`openssl rand -base64 32`)
 - Remove `src\components\common\LinkButton.tsx` and the reference in index if you want to get rid of boilerplate code
-- Run `yarn` or `npm i` to install dependency (note that @type/\<lib> sometimes still has trouble installing so you might need to install that manually ie `yarn add @types@react`)
-- run prisma init `npx prisma db push`
+- Run `yarn` to install dependencies (Node.js 20.9 or newer)
+- run prisma init `yarn prisma db push`
 - Hit the ground running 🏃‍♂️
 
 ## Why are there `.js` files in here?
